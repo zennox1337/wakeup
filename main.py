@@ -1,0 +1,29 @@
+import sys
+
+from aiogram import Bot, types
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.dispatcher import Dispatcher
+from aiogram.utils import executor
+from wakeonlan import send_magic_packet
+
+TOKEN = sys.argv[1]
+MAC = sys.argv[2]
+IP = sys.argv[3]
+
+bot = Bot(token=TOKEN)
+dp = Dispatcher(bot, storage=MemoryStorage())
+
+
+@dp.message_handler(commands=['wakeup'])
+async def hibernate(message: types.Message):
+    try:
+        await message.reply("Отправлен запрос на включение компьютера")
+        send_magic_packet(MAC,
+                          ip_address=IP,
+                          port=9)
+    except Exception as e:
+        await message.reply("Вызывано исключение, попробуйте еще раз")
+
+
+if __name__ == '__main__':
+    executor.start_polling(dp, skip_updates=True)
