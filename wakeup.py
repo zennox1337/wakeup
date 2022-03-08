@@ -15,14 +15,14 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 
 @dp.message_handler(commands=['on'])
-async def hibernate(message: types.Message):
+async def wakeup(message: types.Message):
     try:
         await message.reply("Включаю компьютер")
         send_magic_packet(MAC,
                           ip_address=IP,
                           port=9)
     except Exception as e:
-        await message.reply("Вызывано исключение, попробуйте еще раз")
+        await message.reply("Вызвано исключение, попробуйте еще раз")
 
 
 if __name__ == '__main__':
