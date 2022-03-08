@@ -14,10 +14,10 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 
-@dp.message_handler(commands=['wakeup'])
+@dp.message_handler(commands=['on'])
 async def hibernate(message: types.Message):
     try:
-        await message.reply("Отправлен запрос на включение компьютера")
+        await message.reply("Включаю компьютер")
         send_magic_packet(MAC,
                           ip_address=IP,
                           port=9)
