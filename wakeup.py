@@ -19,7 +19,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 @dp.message_handler(commands=['on'])
 async def wakeup(message: types.Message):
     try:
-        await message.reply(strftime("%Y-%m-%d %H:%M:%S", gmtime()) + "\nВключаю компьютер")
+        await message.reply(strftime("%d-%m-%Y %H:%M:%S", gmtime()) + "\nВключаю компьютер")
         send_magic_packet(MAC,
                           ip_address=IP,
                           port=9)
