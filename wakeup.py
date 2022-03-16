@@ -1,4 +1,5 @@
 import datetime
+import re
 import sys
 import time
 
@@ -20,13 +21,12 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 @dp.message_handler(commands=['on'])
 async def wakeup(message: types.Message):
     try:
-        offset = datetime.timezone(datetime.timedelta(hours=4))
-        print(offset)
-        await message.reply("\nВключаю компьютер")
+        timezone = datetime.timezone(datetime.timedelta(hours=4))
+        await message.reply(datetime.datetime.now(timezone).strftime('%d.%m.%y %H:%M:%S') + "\nВключаю компьютер")
         send_magic_packet(MAC,
                           ip_address=IP,
                           port=9)
-        time.sleep(1)
+        time.sleep(50)
         await bot.send_message(chat_id=message.chat.id, text='Компьютер включен, можете подключаться по VNC')
     except Exception as e:
         await message.reply("Вызвано исключение, попробуйте еще раз")
