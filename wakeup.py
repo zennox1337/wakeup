@@ -1,4 +1,5 @@
 import sys
+import time
 
 from aiogram import Bot, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -21,6 +22,8 @@ async def wakeup(message: types.Message):
         send_magic_packet(MAC,
                           ip_address=IP,
                           port=9)
+        time.sleep(50)
+        await bot.send_message(chat_id=message.chat.id, text='Компьютер включен, можете подключаться по VNC')
     except Exception as e:
         await message.reply("Вызвано исключение, попробуйте еще раз")
 
